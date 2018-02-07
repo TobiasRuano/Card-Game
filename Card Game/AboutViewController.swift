@@ -33,6 +33,7 @@ class AboutViewController: UIViewController {
             pSUsuario = porcentajeUsuario.description + "%"
             pSCpu = porcentajeCpu.description + "%"
         }
+
         return (pSUsuario, pSCpu)
     }
     
