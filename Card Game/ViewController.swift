@@ -130,8 +130,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         (playerScore, cpuScore) = resetScore()
-        higherButtonStyle()
-        lowerButtonStyle()
+        buttonStyle(boton: higherButton)
+        buttonStyle(boton: lowerButton)
         imageViewStyle(image: leftImageView)
         imageViewStyle(image: rightImageView)
         imageViewStyle(image: logo)
@@ -143,24 +143,15 @@ class ViewController: UIViewController {
         image.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
     
-    func higherButtonStyle() {
-        higherButton.backgroundColor = UIColor.white
-        higherButton.layer.cornerRadius = higherButton.frame.height / 2
-        higherButton.setTitleColor(UIColor.black, for: .normal)
-        higherButton.layer.shadowColor = UIColor.darkGray.cgColor
-        higherButton.layer.shadowRadius = 10
-        higherButton.layer.shadowOpacity = 10
-        higherButton.layer.shadowOffset = CGSize(width: 0, height: 0)
-    }
     
-    func lowerButtonStyle() {
-        lowerButton.backgroundColor = UIColor.white
-        lowerButton.layer.cornerRadius = lowerButton.frame.height / 2
-        lowerButton.setTitleColor(UIColor.black, for: .normal)
-        lowerButton.layer.shadowColor = UIColor.darkGray.cgColor
-        lowerButton.layer.shadowRadius = 10
-        lowerButton.layer.shadowOpacity = 10
-        lowerButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+    func buttonStyle(boton: UIButton){
+        boton.backgroundColor = UIColor.white
+        boton.layer.cornerRadius = boton.frame.height / 2
+        boton.setTitleColor(UIColor.black, for: .normal)
+        boton.layer.shadowColor = UIColor.darkGray.cgColor
+        boton.layer.shadowRadius = 10
+        boton.layer.shadowOpacity = 10
+        boton.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
     
     override func viewDidAppear(_ animated: Bool) {
