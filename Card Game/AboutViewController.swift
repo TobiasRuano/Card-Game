@@ -21,17 +21,17 @@ class AboutViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    func porcentaje(usuario: Int , cpu: Int) -> (String, String){
+    func porcentaje(usuario: Float , cpu: Float) -> (String, String){
         var pSUsuario: String
         var pSCpu: String
         if (usuario == 0 && cpu == 0) == true {
             pSCpu = "50%"
             pSUsuario = "50%"
         }else{
-            let porcentajeUsuario = (usuario * 100) / (usuario + cpu)
-            let porcentajeCpu = (cpu * 100) / (usuario + cpu)
-            pSUsuario = porcentajeUsuario.description + "%"
-            pSCpu = porcentajeCpu.description + "%"
+            let porcentajeUsuario: Float = (usuario * 100) / (usuario + cpu)
+            let porcentajeCpu: Float = (cpu * 100) / (usuario + cpu)
+            pSUsuario = (String(format: "%.1f", porcentajeUsuario)) + "%"
+            pSCpu = (String(format: "%.1f", porcentajeCpu)) + "%"
         }
 
         return (pSUsuario, pSCpu)
@@ -55,7 +55,7 @@ class AboutViewController: UIViewController {
         labelPlayer.text = String(totalUser)
         labelCpu.text = String(totalCpu)
         
-        (porcentajeUsuario.text! , porcentajeCpu.text!) = porcentaje(usuario: totalUser, cpu: totalCpu)
+        (porcentajeUsuario.text! , porcentajeCpu.text!) = porcentaje(usuario: Float(totalUser), cpu: Float(totalCpu))
     }
     @IBOutlet weak var playerName: UILabel!
     
