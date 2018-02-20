@@ -25,6 +25,8 @@ class ViewController: UIViewController {
         (playerScore, cpuScore) = resetScore()
         playerScoreLable.text = String(playerScore)
         cpuScoreLabel.text = String(cpuScore)
+        UserDefaults.standard.set(totalUser, forKey: "PlayerScore")
+        UserDefaults.standard.set(totalCpu, forKey: "CpuScore")
         
         createAlert(tittle: "Reseted!!!", message: "Come on! Let's play again!!")
     }
@@ -34,11 +36,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var higherButton: UIButton!
     
     @IBAction func higher(_ sender: UIButton) {
-        
-//        if playerScore == 0  &&  cpuScore == 0 {
-//            rightImageView.image = UIImage(named: "back")
-//            leftImageView.image = UIImage(named: "back")
-//        }
         
         let rightNumber = Int(arc4random_uniform(13))
         leftImageView.image = UIImage(named: cardName[rightNumber])
@@ -75,11 +72,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var lowerButton: UIButton!
     
     @IBAction func lower(_ sender: UIButton) {
-        
-//        if playerScore == 0  &&  cpuScore == 0 {
-//            rightImageView.image = UIImage(named: "back")
-//            leftImageView.image = UIImage(named: "back")
-//        }
         
         let rightNumber = Int(arc4random_uniform(13))
         leftImageView.image = UIImage(named: cardName[rightNumber])
@@ -132,6 +124,8 @@ class ViewController: UIViewController {
         (playerScore, cpuScore) = resetScore()
         buttonStyle(boton: higherButton)
         buttonStyle(boton: lowerButton)
+        buttonStyle(boton: infoButton)
+        buttonStyle(boton: resetButton)
         imageViewStyle(image: leftImageView)
         imageViewStyle(image: rightImageView)
         imageViewStyle(image: logo)
@@ -261,6 +255,10 @@ class ViewController: UIViewController {
             aboutViewController.nombrepasado = nombre
         }
     }
+    
+    @IBOutlet weak var infoButton: UIButton!
+    @IBOutlet weak var resetButton: UIButton!
+    
     
     @IBAction func info(_ sender: Any) {
         performSegue(withIdentifier: "segue", sender: self)

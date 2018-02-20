@@ -33,7 +33,6 @@ class AboutViewController: UIViewController {
             pSUsuario = (String(format: "%.1f", porcentajeUsuario)) + "%"
             pSCpu = (String(format: "%.1f", porcentajeCpu)) + "%"
         }
-
         return (pSUsuario, pSCpu)
     }
     
@@ -44,14 +43,15 @@ class AboutViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        playerName.text = nombrepasado
+        print("El nombre pasado es: \(nombrepasado)")
     }
 
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        playerName.text = nombrepasado
-        print("El nombre pasado es: \(nombrepasado)")
         labelPlayer.text = String(totalUser)
         labelCpu.text = String(totalCpu)
         
