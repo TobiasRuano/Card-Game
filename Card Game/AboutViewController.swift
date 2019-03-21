@@ -12,10 +12,45 @@ import UIKit
 
 class AboutViewController: UIViewController {
     
-    var nombrepasado:String = "Player"
-    
     @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak var playerName: UILabel!
+    @IBOutlet weak var labelPlayer: UILabel!
+    @IBOutlet weak var labelCpu: UILabel!
+    @IBOutlet weak var porcentajeUsuario: UILabel!
+    @IBOutlet weak var porcentajeCpu: UILabel!
     
+    var nombrepasado: String = "Player"
+    var totalCpu = 0
+    var totalUser = 0
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        retrieveScores()
+        playerName.text = nombrepasado
+        print("El nombre pasado es: \(nombrepasado)")
+    }
+
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        labelPlayer.text = String(totalUser)
+        labelCpu.text = String(totalCpu)
+        
+        (porcentajeUsuario.text! , porcentajeCpu.text!) = porcentaje(usuario: Float(totalUser), cpu: Float(totalCpu))
+    }
+    
+    func retrieveScores() {
+        if UserDefaults.standard.value(forKey: "CpuScore") != nil {
+            totalCpu = UserDefaults.standard.value(forKey: "CpuScore") as! Int
+            print("El puntaje obtenido del cpu fue \(totalCpu)")
+        }
+        if UserDefaults.standard.value(forKey: "PlayerScore") != nil {
+            totalUser = UserDefaults.standard.value(forKey: "PlayerScore") as! Int
+            print("El puntaje obtenido del jugador fue \(totalUser)")
+        }
+    }
     
     @IBAction func doneTapped(_ sender: Any) {
         print(totalUser)
@@ -36,28 +71,4 @@ class AboutViewController: UIViewController {
         }
         return (pSUsuario, pSCpu)
     }
-    
-    @IBOutlet weak var labelPlayer: UILabel!
-    @IBOutlet weak var labelCpu: UILabel!
-    @IBOutlet weak var porcentajeUsuario: UILabel!
-    @IBOutlet weak var porcentajeCpu: UILabel!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        playerName.text = nombrepasado
-        print("El nombre pasado es: \(nombrepasado)")
-    }
-
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        labelPlayer.text = String(totalUser)
-        labelCpu.text = String(totalCpu)
-        
-        (porcentajeUsuario.text! , porcentajeCpu.text!) = porcentaje(usuario: Float(totalUser), cpu: Float(totalCpu))
-    }
-    @IBOutlet weak var playerName: UILabel!
-    
 }

@@ -8,14 +8,72 @@
 
 import UIKit
 
-var totalCpu = 0
-var totalUser = 0
-var datoObtenidoCpu = 0
-var datoObtenidoPlayer = 0
+struct score {
+    var cpu: Int
+    var user: Int
+}
 
 class ViewController: UIViewController {
     
-    var nombre = ""
+    var totalCpu = 0
+    var totalUser = 0
+    
+    @IBOutlet weak var leftImageView: UIImageView!
+    @IBOutlet weak var rightImageView: UIImageView!
+    @IBOutlet weak var playerScoreLable: UILabel!
+    var playerScore = 0
+    @IBOutlet weak var cpuScoreLabel: UILabel!
+    @IBOutlet weak var PlayerName: UILabel!
+    var cpuScore = 0
+    @IBOutlet weak var higherButton: UIButton!
+    @IBOutlet weak var lowerButton: UIButton!
+    @IBOutlet weak var logo: UIImageView!
+    
+    @IBOutlet weak var infoButton: UIButton!
+    @IBOutlet weak var resetButton: UIButton!
+    
+    let cardName = ["ace", "card2", "card3", "card4", "card5", "card6", "card7", "card8", "card9", "card10", "jack", "queen", "king"]
+    let back = "back"
+    var nombre = "Player"
+    var flag = true
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        (playerScore, cpuScore) = resetScore()
+        buttonStyle(boton: higherButton)
+        buttonStyle(boton: lowerButton)
+        buttonStyle(boton: infoButton)
+        buttonStyle(boton: resetButton)
+        imageViewStyle(image: leftImageView)
+        imageViewStyle(image: rightImageView)
+        imageViewStyle(image: logo)
+        
+        retrievePastScores()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if (UserDefaults.standard.value(forKey: "name") as? String) == nil {
+            nombre = usuario()
+            PlayerName.text = nombre
+        }else{
+            print("User Defaults else \(UserDefaults.standard.value(forKey: "name") as! String)")
+            nombre = UserDefaults.standard.string(forKey: "name")!
+            PlayerName.text = nombre
+        }
+    }
+    
+    func retrievePastScores() {
+        if UserDefaults.standard.value(forKey: "CpuScore") != nil {
+            totalCpu = UserDefaults.standard.value(forKey: "CpuScore") as! Int
+            print("El puntaje obtenido del cpu fue \(totalCpu)")
+        }
+        if UserDefaults.standard.value(forKey: "PlayerScore") != nil {
+            totalUser = UserDefaults.standard.value(forKey: "PlayerScore") as! Int
+            print("El puntaje obtenido del jugador fue \(totalUser)")
+        }
+    }
     
     @IBAction func reset(_ sender: UIButton) {
         
@@ -30,10 +88,6 @@ class ViewController: UIViewController {
         
         createAlert(tittle: "Reseted!!!", message: "Come on! Let's play again!!")
     }
-    
-    var flag = true
-    
-    @IBOutlet weak var higherButton: UIButton!
     
     @IBAction func higher(_ sender: UIButton) {
         
@@ -69,8 +123,6 @@ class ViewController: UIViewController {
         UserDefaults.standard.set(totalCpu, forKey: "CpuScore")
     }
     
-    @IBOutlet weak var lowerButton: UIButton!
-    
     @IBAction func lower(_ sender: UIButton) {
         
         let rightNumber = Int(arc4random_uniform(13))
@@ -105,32 +157,6 @@ class ViewController: UIViewController {
         UserDefaults.standard.set(totalCpu, forKey: "CpuScore")
     }
     
-    
-    @IBOutlet weak var leftImageView: UIImageView!
-    @IBOutlet weak var rightImageView: UIImageView!
-    @IBOutlet weak var playerScoreLable: UILabel!
-    var playerScore = 0
-    @IBOutlet weak var cpuScoreLabel: UILabel!
-    @IBOutlet weak var PlayerName: UILabel!
-    var cpuScore = 0
-    @IBOutlet weak var logo: UIImageView!
-    
-    
-    let cardName = ["ace", "card2", "card3", "card4", "card5", "card6", "card7", "card8", "card9", "card10", "jack", "queen", "king"]
-    let back = "back"
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        (playerScore, cpuScore) = resetScore()
-        buttonStyle(boton: higherButton)
-        buttonStyle(boton: lowerButton)
-        buttonStyle(boton: infoButton)
-        buttonStyle(boton: resetButton)
-        imageViewStyle(image: leftImageView)
-        imageViewStyle(image: rightImageView)
-        imageViewStyle(image: logo)
-    }
-    
     func imageViewStyle(image: AnyObject) {
         image.layer.shadowRadius = 6
         image.layer.shadowOpacity = 1
@@ -147,20 +173,6 @@ class ViewController: UIViewController {
         boton.layer.shadowOpacity = 10
         boton.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        if (UserDefaults.standard.value(forKey: "name") as? String) == nil {
-            nombre = usuario()
-            PlayerName.text = nombre
-        }else{
-            print("User Defaults else \(UserDefaults.standard.value(forKey: "name") as! String)")
-            nombre = UserDefaults.standard.string(forKey: "name")!
-            PlayerName.text = nombre
-        }
-    }
-
     
     func winner(left: Int, right: Int, boolean: Bool) -> (Int, Int, Bool){
         
@@ -253,11 +265,10 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let aboutViewController = segue.destination as? AboutViewController {
             aboutViewController.nombrepasado = nombre
+            UserDefaults.standard.set(totalCpu, forKey: "CpuScore")
+            UserDefaults.standard.set(totalUser, forKey: "PlayerScore")
         }
     }
-    
-    @IBOutlet weak var infoButton: UIButton!
-    @IBOutlet weak var resetButton: UIButton!
     
     
     @IBAction func info(_ sender: Any) {

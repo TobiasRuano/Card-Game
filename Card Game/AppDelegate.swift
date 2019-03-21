@@ -16,14 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        if UserDefaults.standard.value(forKey: "CpuScore") != nil {
-            totalCpu = UserDefaults.standard.value(forKey: "CpuScore") as! Int
-            print("El puntaje obtenido del cpu fue \(totalCpu)")
-        }
-        if UserDefaults.standard.value(forKey: "PlayerScore") != nil {
-            totalUser = UserDefaults.standard.value(forKey: "PlayerScore") as! Int
-            print("El puntaje obtenido del jugador fue \(totalUser)")
-        }
+//        if UserDefaults.standard.value(forKey: "CpuScore") != nil {
+//            totalCpu = UserDefaults.standard.value(forKey: "CpuScore") as! Int
+//            print("El puntaje obtenido del cpu fue \(totalCpu)")
+//        }
+//        if UserDefaults.standard.value(forKey: "PlayerScore") != nil {
+//            totalUser = UserDefaults.standard.value(forKey: "PlayerScore") as! Int
+//            print("El puntaje obtenido del jugador fue \(totalUser)")
+//        }
         return true
     }
     
@@ -52,8 +52,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func saveData() {
-        UserDefaults.standard.set(totalCpu, forKey: "CpuScore")
-        UserDefaults.standard.set(totalUser, forKey: "PlayerScore")
+        
+        //TODO: test if it works
+        let viewController = UIApplication.shared.windows[0].rootViewController?.childViewControllers[1] as? ViewController
+        
+        UserDefaults.standard.set(viewController?.totalCpu, forKey: "CpuScore")
+        UserDefaults.standard.set(viewController?.totalUser, forKey: "PlayerScore")
     }
     
 }
